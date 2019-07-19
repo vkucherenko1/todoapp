@@ -71,8 +71,4 @@ export class TasksService {
     this.setToStorage();
   }
 
-  filterTasks(text: string) {
-    this.tasks = JSON.parse(localStorage.getItem('tasks')).filter(tsk => new RegExp(text, 'im').test(tsk.task));
-  }
-
 }
