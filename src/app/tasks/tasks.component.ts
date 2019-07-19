@@ -41,4 +41,8 @@ export class TasksComponent implements OnInit {
     this.tasksService.editTask(id, text);
   }
 
+  filterTasks() {
+    this.tasksService.filterTasks(this.filterText);
+  }
+
 }
