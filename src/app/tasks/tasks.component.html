@@ -1,17 +1,26 @@
 <div class="todo">
-  <textarea class="form-control" rows="2" placeholder="Input your task" [(ngModel)]="newTask" (keydown.enter)="addTask()"></textarea>
+  <textarea class="form-control" rows="2" placeholder="Input your task" [(ngModel)]="newTask"
+            (keydown.enter)="addTask()"></textarea>
   <button class="btn btn-primary" (click)="addTask()">Add task</button>
-  <input class="form-control" placeholder="Filter your tasks" [(ngModel)]="filterText">
-    <div class="row" *ngFor="let task of tasksService.tasks | tasksFilter: filterText">
-      <div class="col-md-8">
-        <span *ngIf="!task.edit" class="left icon glyphicon glyphicon-ok" [style.visibility]="!task.done ? 'hidden' : 'visible'"></span>
-        <span class="left" *ngIf="!task.edit" >{{task.task}}</span>
-        <textarea class="form-control left" rows="2" *ngIf="task.edit" class="form-control" value="{{task.task}}" [(ngModel)]="textTask" (keydown.enter)="editTask(task.id, textTask)"></textarea>
-      </div>
-      <div class="col-md-4">
-      <button class="btn btn-warning" (click)="!task.edit ? changeEditStatus(task.id, task.task) : editTask(task.id, textTask)">{{!task.edit ? 'Edit' : 'Save'}}</button>
-      <button class="btn btn-secondary" (click)="changeDoneStatus(task.id)">{{task.done ? 'Undone' : 'Done'}}</button>
-      <button class="btn btn-danger" (click)="deleteTask(task.id)">Remove</button>
-      </div>
+  <div class="inner-addon right-addon">
+    <input class="form-control" placeholder="Filter your tasks" [(ngModel)]="filterText">
+    <i class="{{filterText ? 'glyphicon glyphicon-remove' : 'glyphicon glyphicon-search'}}"
+       (click)="clearFilterText()"></i>
+  </div>
+  <div class="row" *ngFor="let task of tasksService.tasks | tasksFilter: filterText">
+    <div class="col-md-8">
+      <i *ngIf="!task.edit" class="left icon glyphicon glyphicon-ok"
+         [style.visibility]="!task.done ? 'hidden' : 'visible'" (click)="clearFilterText()"></i>
+      <span class="left" *ngIf="!task.edit">{{task.task}}</span>
+      <textarea class="form-control left" rows="2" *ngIf="task.edit" class="form-control" value="{{task.task}}"
+                [(ngModel)]="textTask" (keydown.enter)="editTask(task.id, textTask)"></textarea>
     </div>
+    <div class="col-md-4">
+      <button class="btn btn-warning"
+              (click)="!task.edit ? changeEditStatus(task.id, task.task) : editTask(task.id, textTask)">{{!task.edit ? 'Edit' : 'Save'}}
+      </button>
+      <button class="btn {{task.done ? 'btn-secondary' : 'btn-success'}}" (click)="changeDoneStatus(task.id)">{{task.done ? 'Undone' : 'Done'}}</button>
+      <button class="btn btn-danger" (click)="deleteTask(task.id)">Remove</button>
+    </div>
+  </div>
 </div>
